@@ -14,3 +14,9 @@
 Route::get('/', function () {
 	return view('welcome');
 });
+
+Route::get('/test', function () {
+	return 'A Test url';
+});
+
+Route::resource('opportunities', 'OpportunityController');
