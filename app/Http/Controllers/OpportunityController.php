@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use Cd\Http\Requests;
 
+use Cd\Opportunity;
+
 class OpportunityController extends Controller
 {
     /**
@@ -15,7 +17,8 @@ class OpportunityController extends Controller
      */
     public function index()
     {
-        //
+        $opps = Opportunity::all();
+        return $opps;
     }
 
     /**
@@ -36,7 +39,11 @@ class OpportunityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $opp = new Opportunity;
+        $opp->title = 'Test Opportunity';
+        $opp->logo = 'http://cdlaravel/images/testlogo.jpg';
+        $opp->save();
+        return 1;
     }
 
     /**
@@ -47,7 +54,8 @@ class OpportunityController extends Controller
      */
     public function show($id)
     {
-        //
+        $opp = Opportunity::find($id);
+        return $opp;
     }
 
     /**
@@ -70,7 +78,7 @@ class OpportunityController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $opp = Opportunity::find($id);
     }
 
     /**
@@ -81,6 +89,7 @@ class OpportunityController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Opportunity::destroy($id);
+        return 1;
     }
 }
