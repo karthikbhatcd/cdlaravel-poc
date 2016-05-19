@@ -90,6 +90,20 @@ return [
             ]
         ],
 
+        'drupal' => [
+            'driver' => 'mysql',
+            'host' => env('DBD_HOST', 'localhost'),
+            'port' => env('DBD_PORT', '3306'),
+            'database' => env('DBD_DATABASE', 'forge'),
+            'username' => env('DBD_USERNAME', 'forge'),
+            'password' => env('DBD_PASSWORD', ''),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+            'engine' => null,
+        ],
+
     ],
 
     /*

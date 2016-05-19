@@ -32,3 +32,6 @@ $compiledPath = __DIR__.'/cache/compiled.php';
 if (file_exists($compiledPath)) {
     require $compiledPath;
 }
+
+require __DIR__.'/../app/Http/Helpers/nginx.php';
+require __DIR__.'/../app/Http/Helpers/drupal.php';

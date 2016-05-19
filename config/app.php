@@ -210,4 +210,9 @@ return [
 
     ],
 
+    // Fields required to generate drupal csrf token
+
+    'drupal_hash_salt' => 'LAMpVA0q0wNNHJf9KB3IX-ATxk5-CrmHPrsuwxrkkJQ',
+    'drupal_databases' => [],
+
 ];
