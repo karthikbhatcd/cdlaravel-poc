@@ -64,6 +64,7 @@ vendor
 			"title": "Opportunity Title",
 			"logo": "http://logo_url.jpg"
 		}
+        ```
  - Update single Opportunity
    - PUT `/opportunities/{opportunity_id}`
    - data:
@@ -72,5 +73,6 @@ vendor
 			"title": "Opportunity Edited Title",
 			"logo": "http://logo_url.jpg"
 		}
+        ```
  - Delete single Opportunity
    - DELETE `/opportunities/{opportunity_id}`
