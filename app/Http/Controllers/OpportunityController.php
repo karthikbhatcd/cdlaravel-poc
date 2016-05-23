@@ -59,6 +59,14 @@ class OpportunityController extends Controller
             ->skip( $limit * $offset )
             ->get();
 
+        if( isset( $_GET['fields'] ) ){
+            $fields = explode( ',', $_GET['fields'] );
+            $query = Drupal::table('profile');
+            foreach ($fields as $field) {
+                $query->leftJoin( $field, 'profile.pid', '=', $field . '.entity_id' );
+            }
+        }
+
         return $opps;
     }
 
@@ -83,9 +91,8 @@ class OpportunityController extends Controller
             $opp->title = $request->title;
         if( ! is_null( $request->logo ) )
             $opp->logo = $request->logo;
-        $author = new stdClass;
-        $author->uuid = $this->user->uuid;
-        $opp->author = $author;
+
+        $opp->author = (object)['data'=>[(object)['id'=>$this->user->uuid]]];
         if( $opp->save() )
             return 1;
         return 0;
@@ -100,7 +107,8 @@ class OpportunityController extends Controller
     public function show($id) {
         $opp = Opportunity::find($id);
 
-        $uuid = $opp->author;
+        $wrtrs = $opp->author['data'];
+        $writers = array_map( [$this, 'get_author_ids'], $wrtrs);
 
         $fields = [
             'field_data_field_profile_bi_user_name',
@@ -114,15 +122,22 @@ class OpportunityController extends Controller
             $query->leftJoin( $field, 'profile.pid', '=', $field . '.entity_id' );
         }
 
-        $profile = $query->where('profile.uuid', $uuid)->first();
+        $profiles = $query->whereIn('profile.uuid', $writers)->get();
+        $authors = [];
 
-        $author = [
-            'uuid' => $opp->author['uuid'],
+        foreach ($profiles as $profile) {
+            $author = [
+                'id' => $profile->uuid,
+                'href' => url( '/v1/profiles/' . $profile->uuid ),
+                'name' => $profile->field_profile_bi_user_name_value
+            ];
+            $authors[] = $author;
+        }
+
+        $opp->author = (object)[
             'href' => url( '/v1/opprtunities/' . $id . '/author' ),
-            'name' => $profile->field_profile_bi_user_name_value
+            'data' => $authors
         ];
-
-        $opp->author = $author;
 
         return $opp;
     }
@@ -165,5 +180,9 @@ class OpportunityController extends Controller
         if( Opportunity::destroy($id) )
             return 1;
         return 0;
+    }
+
+    protected function get_author_ids($auth){
+        return $auth['id'];
     }
 }

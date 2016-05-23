@@ -1,27 +1,76 @@
-# Laravel PHP Framework
+# Laravel API POC
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+POC API application on Laraval for Opportunities Resource.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
-
-## Official Documentation
+## Official Laravel Documentation
 
 Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
 
-## Contributing
+## Folder Structure
+```sh
+app
+	all models go here
+	-- http
+		-- Controllers
+			all controllers go here
+		-- Helpers
+			helper function files
+		-- Middleware
+			middleware classes
+		routes -- url router
+config
+	application configuration files
+	app.php
+		service providers, namespace aliases, drupal token variables
+	database.php
+		database connection setup
+public
+	the directory visible to public - images, css etc
+resources
+	raw assets like sass, php / blade templates etc
+storage
+	contains compiled files, session files, cached files etc
+tests
+	directory contains your test files
+vendor
+	contains Composer dependencies
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+## Installation
+ - Install composer : http://getcomposer.org
+ - Install laravel :
+	`composer global require "laravel/installer=~1.1"`
+ - Install mongodb : https://docs.mongodb.com/v3.2/installation/
+ - cd to a directory of choice where application is to installed
+ - `git clone https://github.com/karthikbhatcd/cdlaravel-poc.git`
+ - `cd cdlaravel-poc`
+ - copy .env.example to .env
+ - Enter database details, app details in .env file
+ - `php artisan key:generate`
+ - `composer update`
 
-## Security Vulnerabilities
+# Routes
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+ - Get all Opportunities
+   - GET `/opportunities`
+ - Get single Opportunity
+   - GET `/opportunities/{opportunity_id}`
+ - Create an Opportunity
+   - POST `/opportunities`
+   - data:
+   - ```sh
+		{
+			"title": "Opportunity Title",
+			"logo": "http://logo_url.jpg"
+		}
+ - Update single Opportunity
+   - PUT `/opportunities/{opportunity_id}`
+   - data:
+   - ```sh
+		{
+			"title": "Opportunity Edited Title",
+			"logo": "http://logo_url.jpg"
+		}
+ - Delete single Opportunity
+   - DELETE `/opportunities/{opportunity_id}`
